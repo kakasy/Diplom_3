@@ -6,31 +6,18 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import model.UserRequest;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.ForgotPasswordPage;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.RegisterPage;
 
 import static client.UserClient.createUserRequest;
-import static generator.DriverConfig.createDriver;
 import static model.UserRequest.createUser;
+import static org.junit.Assert.assertTrue;
 
 
-public class LoginPageTest {
-
-    private WebDriver driver;
-
-    @Before
-    public void startUp() {
-        driver = createDriver();
-        driver.manage().window().maximize();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
-    }
+public class LoginPageTest extends BaseTest {
 
     @DisplayName("Вход через кнопку 'Личный кабинет'")
     @Description("После успешной авторизации происходит редирект на главную страницу")
@@ -48,6 +35,8 @@ public class LoginPageTest {
         loginPage.userLogin(userRequest.getEmail(), userRequest.getPassword());
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
 
@@ -67,6 +56,8 @@ public class LoginPageTest {
         loginPage.userLogin(userRequest.getEmail(), userRequest.getPassword());
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
 
@@ -89,6 +80,8 @@ public class LoginPageTest {
         loginPage.userLogin(userRequest.getEmail(), userRequest.getPassword());
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
 
@@ -112,12 +105,8 @@ public class LoginPageTest {
         loginPage.userLogin(userRequest.getEmail(), userRequest.getPassword());
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
-    }
 
-
-    @After
-    public void teardown() {
-        driver.quit();
+        assertTrue(mainPage.isMainPageVisible());
     }
 
 }
