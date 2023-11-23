@@ -3,29 +3,13 @@ package tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import model.UserRequest;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.RegisterPage;
 
-import static generator.DriverConfig.createDriver;
-
-public class RegisterPageTest {
-
-    private WebDriver driver;
-
-    @Before
-    public void startUp() {
-        driver = createDriver();
-        driver.manage().window().maximize();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
-    }
-
+public class RegisterPageTest extends BaseTest {
 
     @DisplayName("Регистрация пользователя с корректными данными")
     @Description("Должна отобразиться страница логина")
@@ -63,9 +47,4 @@ public class RegisterPageTest {
         Assert.assertTrue("Пользователь зарегистрирован", registerPage.isErrorMessageVisible());
     }
 
-
-    @After
-    public void teardown() {
-        driver.quit();
-    }
 }
