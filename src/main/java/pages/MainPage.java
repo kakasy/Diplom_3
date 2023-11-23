@@ -24,6 +24,9 @@ public class MainPage {
     // Локатор кнопки "Начинки"
     private static final By FILLINGS_BTN = By.xpath(".//div[./span[text()='Начинки']]");
 
+    // Локатор главной страницы
+    private static final By MAIN_PAGE_LOCATOR = By.xpath("//section[@class='BurgerIngredients_ingredients__1N8v2']");
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -87,5 +90,10 @@ public class MainPage {
 
         ((JavascriptExecutor) driver)
                 .executeAsyncScript("window.setTimeout(arguments[arguments.length - 1], 1000);");
+    }
+
+    @Step("Проверка отображения главной страницы")
+    public boolean isMainPageVisible() {
+        return (driver.findElement(MAIN_PAGE_LOCATOR).isDisplayed());
     }
 }
