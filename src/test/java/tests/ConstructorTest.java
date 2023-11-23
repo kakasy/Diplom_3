@@ -3,26 +3,12 @@ package tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.hamcrest.MatcherAssert;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.MainPage;
 
-import static generator.DriverConfig.createDriver;
 import static org.hamcrest.core.StringContains.containsString;
 
-public class ConstructorTest {
-
-    private WebDriver driver;
-
-    @Before
-    public void startUp() {
-        driver = createDriver();
-        driver.manage().window().maximize();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
-    }
+public class ConstructorTest extends BaseTest {
 
     @DisplayName("Переход к разделу 'Булки'")
     @Description("Кнопка перехода в секцию Булки должна быть активной")
@@ -58,9 +44,4 @@ public class ConstructorTest {
         MatcherAssert.assertThat("Ошибка перехода", mainPage.getFillingsAttribute(), containsString("current"));
     }
 
-
-    @After
-    public void teardown() {
-        driver.quit();
-    }
 }
