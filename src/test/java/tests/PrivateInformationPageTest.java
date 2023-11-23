@@ -6,28 +6,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import model.UserRequest;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import pages.LoginPage;
 import pages.MainPage;
 import pages.PrivateInformationPage;
 
+import static org.junit.Assert.assertTrue;
 
-import static generator.DriverConfig.createDriver;
-
-public class PrivateInformationPageTest {
-    private WebDriver driver;
-
-    @Before
-    public void startUp() {
-        driver = createDriver();
-        driver.manage().window().maximize();
-        driver.get("https://stellarburgers.nomoreparties.site/");
-
-    }
+public class PrivateInformationPageTest extends BaseTest {
 
     @DisplayName("Переход в Личный Кабинет")
     @Description("Должна отобразиться страница личного кабинета")
@@ -46,8 +32,10 @@ public class PrivateInformationPageTest {
         loginPage.userLogin(userRequest.getEmail(), userRequest.getPassword());
         mainPage.clickAccountButton();
 
-        Assert.assertTrue("Ошибка перехода", personalPage.isPersonalPageVisible());
+
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue("Ошибка перехода", personalPage.isPersonalPageVisible());
     }
 
     @DisplayName("Переход из личного кабинета в конструктор по клику на Конструктор")
@@ -70,6 +58,8 @@ public class PrivateInformationPageTest {
 
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
     @DisplayName("Переход из личного кабинета в конструктор по клику на логотип")
@@ -92,6 +82,8 @@ public class PrivateInformationPageTest {
 
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
     @DisplayName("Выход из аккаунта")
@@ -114,10 +106,8 @@ public class PrivateInformationPageTest {
 
 
         UserClient.deleteUserRequest(UserClient.getAuthToken(response));
+
+        assertTrue(mainPage.isMainPageVisible());
     }
 
-    @After
-    public void teardown() {
-        driver.quit();
-    }
 }
